@@ -7,3 +7,8 @@ matrix:
         - "1.10.x"
       before_install:
       script:
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: $HEROKU_API_KEY
