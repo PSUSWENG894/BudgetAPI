@@ -9,3 +9,5 @@ deploy:
   api_key: $HEROKU_API_KEY
   app:
     develop: sf-budget-api
+  on:
+      branch: master
