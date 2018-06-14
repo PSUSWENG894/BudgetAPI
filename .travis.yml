@@ -3,6 +3,8 @@ matrix:
     - language: go
       go:
         - "1.10.x"
+      script:
+        - go build main.go
 
 deploy:
   provider: heroku

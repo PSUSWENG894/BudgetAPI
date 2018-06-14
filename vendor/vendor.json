@@ -1,0 +1,19 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "lrqmgIsG2d/Sha2L48DXBAyH4aE=",
+			"path": "BudgetAPI",
+			"revision": "958ba15ab15042e068dfa0d439ab7d0629ea1766",
+			"revisionTime": "2018-06-13T02:59:30Z"
+		},
+		{
+			"checksumSHA1": "Qq7Gzany1n6gK6hpZQq9UXFhGGo=",
+			"comment": "v1.0rc1-110-g4cc2de6",
+			"path": "github.com/gin-gonic/gin",
+			"revision": "4cc2de6207f4128624cbdd16be30f64966c67c08"
+		}
+	],
+	"rootPath": "BudgetAPI"
+}
