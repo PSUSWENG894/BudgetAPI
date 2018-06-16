@@ -26,6 +26,17 @@ func init() {
 	}
 }
 
+func testdb() {
+	msg := ""
+	db.Ping()
+	if err != nil {
+		msg = "Got error connecting to db: " + err.Error()
+	} else {
+		msg = "Pinged DB successfully: " + os.Getenv("DATABASE_URL")
+	}
+	ctxt.JSON(200, gin.H{"message": msg},)
+}
+
 func main() {
 	msg := "Hello World!"
 	fmt.Printf(msg)
@@ -35,6 +46,8 @@ func main() {
 		ctxt.JSON(200, gin.H{"message": msg},)
 	})
 
+	router.GET("/testdb", testdb)
+
 	routes := router.Group("/api/account")
 	{
 		routes.POST("/", createAccount)
@@ -43,6 +56,8 @@ func main() {
 		routes.PUT("/:id", updateAccount)
 		routes.DELETE("/:id", deleteAccount)
 	}
+
+
 
 	router.Run()
 }
