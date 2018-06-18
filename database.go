@@ -7,10 +7,12 @@ import (
 	"os"
 )
 
+var db *sql.DB
+
 func setupDatabase(){
 	msg := ""
 	dbConnString := fmt.Sprintf("host=%s dbname=%s user=%s password=%s sslmode=disable", 
-		os.Getenv("DATABASE_URL"), os.Getenv("DB_NAME"), os.Getenv("DB_USER"), 
+		os.Getenv("DB_HOST"), os.Getenv("DB_NAME"), os.Getenv("DB_USER"), 
 		os.Getenv("DB_PASSWORD"))
 	db, err := sql.Open("postgres", dbConnString)
 	if err != nil {
@@ -25,11 +27,11 @@ func setupDatabase(){
 		fmt.Printf("Pinged DB successfully: " + os.Getenv("DATABASE_URL"))
 	}
 
-	// createTables()
+	createTables()
 }
 
-// funct createTables(){
-// 	if _, err := db.Exec("CREATE TABLE IF NOT EXISTS ticks (tick timestamp)"); err != nil {
-//         fmt.Printf("Error creating database table: %q", err)
-//     }
-// }
+funct createTables(){
+	if _, err := db.Exec("CREATE TABLE IF NOT EXISTS account (name varchar(25),balance NUMERIC(17,2))"); err != nil {
+        fmt.Printf("Error creating database table: account", err)
+    }
+}
