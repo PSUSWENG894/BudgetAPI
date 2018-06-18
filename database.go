@@ -35,12 +35,20 @@ func setupDatabase(){
 
 func createTables(){
 	tableName := "account"
-	tableDefinition := tableName + ` (name varchar(25),
+	tableDefinition := tableName + ` (name varchar(25) UNIQUE NOT NULL,
 		balance NUMERIC(17,2))
 		`
 	if _, err := db.Exec("CREATE TABLE IF NOT EXISTS " + tableDefinition); err != nil {
         fmt.Printf("Error creating database table %s: %s", tableName, err)
+        return
     }else {
     	fmt.Printf("Created database table %s", tableName)
+    }
+
+    insertStatement := `
+    INSERT INTO account(name, balance) values ('test', 0.00)`
+    _, err := db.Exec(insertStatement)
+    if err != nil {
+    	fmt.Printf("Error add account")
     }
 }
