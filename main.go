@@ -11,6 +11,7 @@ import (
 var db *sql.DB
 
 func init() {
+	fmt.Printf("Running init")
 	msg := ""
 	dbConnString := fmt.Sprintf("host=%s dbname=%s user=%s password=%s sslmode=disable", 
 		os.Getenv("DATABASE_URL"), os.Getenv("DB_NAME"), os.Getenv("DB_USER"), 
