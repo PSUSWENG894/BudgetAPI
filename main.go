@@ -12,23 +12,26 @@ var db *sql.DB
 
 func init() {
 	msg := ""
-	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+	dbConnString := fmt.Sprintf("host=%s dbname=%s user=%s password=%s sslmode=disable", 
+		os.Getenv("DATABASE_URL"), os.Getenv("DB_NAME"), os.Getenv("DB_USER"), 
+		os.Getenv("DB_PASSWORD"))
+	db, err := sql.Open("postgres", dbConnString)
 	if err != nil {
-		fmt.Printf(err.Error())
 		msg += ". Got error connecting to db: " + err.Error()
+		fmt.Printf(msg)
 	}
-	db.Ping()
+	err = db.Ping()
 	if err != nil {
-		fmt.Printf(err.Error())
 		msg += ". Got error connecting to db: " + err.Error()
+		fmt.Printf(msg)
 	} else {
 		fmt.Printf("Pinged DB successfully: " + os.Getenv("DATABASE_URL"))
 	}
 }
 
-func testdb() {
+func testdb(ctxt *gin.Context) {
 	msg := ""
-	db.Ping()
+	err := db.Ping()
 	if err != nil {
 		msg = "Got error connecting to db: " + err.Error()
 	} else {
@@ -38,6 +41,7 @@ func testdb() {
 }
 
 func main() {
+
 	msg := "Hello World!"
 	fmt.Printf(msg)
 
