@@ -20,7 +20,7 @@ func testdb(ctxt *gin.Context) {
 	if err != nil {
 		msg = "Got error connecting to db: " + err.Error()
 	} else {
-		msg = "Pinged DB successfully: " + os.Getenv("DATABASE_URL")
+		msg = "Pinged DB successfully: " + os.Getenv("DB_HOST")
 		
 	}
 	fmt.Printf(msg)
