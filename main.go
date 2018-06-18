@@ -1,33 +1,16 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 	"os"
 )
 
-var db *sql.DB
 
 func init() {
 	fmt.Printf("Running init")
-	msg := ""
-	dbConnString := fmt.Sprintf("host=%s dbname=%s user=%s password=%s sslmode=disable", 
-		os.Getenv("DB_HOST"), os.Getenv("DB_NAME"), os.Getenv("DB_USER"), 
-		os.Getenv("DB_PASSWORD"))
-	db, err := sql.Open("postgres", dbConnString)
-	if err != nil {
-		msg += ". Got error connecting to db: " + err.Error()
-		fmt.Printf(msg)
-	}
-	err = db.Ping()
-	if err != nil {
-		msg += ". Got error connecting to db: " + err.Error()
-		fmt.Printf(msg)
-	} else {
-		fmt.Printf("Pinged DB successfully: " + os.Getenv("DATABASE_URL"))
-	}
+	setupDatabase()
 }
 
 func testdb(ctxt *gin.Context) {

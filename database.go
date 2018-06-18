@@ -14,15 +14,18 @@ func setupDatabase(){
 	dbConnString := fmt.Sprintf("host=%s dbname=%s user=%s password=%s sslmode=disable", 
 		os.Getenv("DB_HOST"), os.Getenv("DB_NAME"), os.Getenv("DB_USER"), 
 		os.Getenv("DB_PASSWORD"))
-	db, err := sql.Open("postgres", dbConnString)
+	database, err := sql.Open("postgres", dbConnString)
+	db = database
 	if err != nil {
 		msg += ". Got error connecting to db: " + err.Error()
 		fmt.Printf(msg)
+		return
 	}
 	err = db.Ping()
 	if err != nil {
 		msg += ". Got error connecting to db: " + err.Error()
 		fmt.Printf(msg)
+		return
 	} else {
 		fmt.Printf("Pinged DB successfully: " + os.Getenv("DATABASE_URL"))
 	}
@@ -30,8 +33,14 @@ func setupDatabase(){
 	createTables()
 }
 
-funct createTables(){
-	if _, err := db.Exec("CREATE TABLE IF NOT EXISTS account (name varchar(25),balance NUMERIC(17,2))"); err != nil {
-        fmt.Printf("Error creating database table: account", err)
+func createTables(){
+	tableName := "account"
+	tableDefinition := tableName + ` (name varchar(25),
+		balance NUMERIC(17,2))
+		`
+	if _, err := db.Exec("CREATE TABLE IF NOT EXISTS " + tableDefinition); err != nil {
+        fmt.Printf("Error creating database table %s: %s", tableName, err)
+    }else {
+    	fmt.Printf("Created database table %s", tableName)
     }
 }
