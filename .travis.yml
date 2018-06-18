@@ -4,7 +4,7 @@ matrix:
       go:
         - "1.10.x"
       script:
-        - go build main.go
+        - go build
 
 deploy:
   provider: heroku
