@@ -31,12 +31,15 @@ func init() {
 
 func testdb(ctxt *gin.Context) {
 	msg := ""
+
 	err := db.Ping()
 	if err != nil {
 		msg = "Got error connecting to db: " + err.Error()
 	} else {
 		msg = "Pinged DB successfully: " + os.Getenv("DATABASE_URL")
+		
 	}
+	fmt.Printf(msg)
 	ctxt.JSON(200, gin.H{"message": msg},)
 }
 
