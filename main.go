@@ -1,16 +1,17 @@
 package main
 
 import (
-	// "encoding/json"
+	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
+	"BudgetAPI/db"
 )
 
 
 func init() {
 	fmt.Printf("Running init")
-	setupDatabase()
+	db.SetupDatabase(true)
 }
 
 func main() {
@@ -39,38 +40,36 @@ func main() {
 
 func createAccount(ctxt *gin.Context){
 	msg := "Creating account"
-	fmt.Printf(msg)
-	ctxt.JSON(200, gin.H{"message": msg},)
+
+	var account db.Account
+	ctxt.BindJSON(&account)
+
+	database := db.GetDB()
+	database.Save(&account)
+
+	print("Got context: ")
+	print(ctxt)
+	print("\n")
+	print(ctxt.Params)
+	print("\n")
+
+	fmt.Printf(msg + "\n")
+	// ctxt.JSON(200, gin.H{"message": msg},)
+	ctxt.JSON(201, account)
 }
 func fetchAllAccounts(ctxt *gin.Context){
 	msg := "Fetching all accounts"
 	fmt.Printf(msg)
 
-	// qry := `SELECT * FROM account`
-	// results, err := db.Query(qry)
-	// if err != nil {
-	// 	msg = "Error fetching accounts from database"
-	// 	fmt.Printf(msg)
-	// }
-
-	// type Account struct {
-	// 	Name string
-	// 	Balance float64
-	// }
-
-	// accounts := make([]Account,0)
-	// msg = ""
-	// for results.Next() {
-	// 	var name string
-	// 	var balance float64
-	// 	results.Scan(&name, &balance)
-	// 	acct := Account{name, balance}
-	// 	accounts = append(accounts, acct)
-	// 	acctJson, _ := json.Marshal(acct)
-	// 	msg += string(acctJson)
-	// }
-
-	// fmt.Printf("Total accounts: %d", len(accounts))
+	database := db.GetDB()
+	accounts := []db.Account{}
+	database.Find(&accounts)
+	var count int
+	database.Model(&db.Account{}).Count(&count)
+	
+	msg = ""
+	acctJson, _ := json.Marshal(accounts)
+	msg += string(acctJson)
 
 	ctxt.JSON(200, gin.H{"message": msg},)
 }
