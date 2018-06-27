@@ -1,54 +1,43 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
 	_ "github.com/lib/pq"
+	"github.com/jinzhu/gorm"
 	"os"
 )
 
-var db *sql.DB
+var db *gorm.DB
+
+type Account struct {
+	gorm.Model
+	Name string
+	Balance float64
+}
 
 func setupDatabase(){
 	msg := ""
 	dbConnString := fmt.Sprintf("host=%s dbname=%s user=%s password=%s sslmode=disable", 
 		os.Getenv("DB_HOST"), os.Getenv("DB_NAME"), os.Getenv("DB_USER"), 
 		os.Getenv("DB_PASSWORD"))
-	database, err := sql.Open("postgres", dbConnString)
+	// database, err := sql.Open("postgres", dbConnString)
+	database, err := gorm.Open("postgres", dbConnString)
 	db = database
 	if err != nil {
 		msg += ". Got error connecting to db: " + err.Error()
 		fmt.Printf(msg)
 		return
 	}
-	err = db.Ping()
-	if err != nil {
-		msg += ". Got error connecting to db: " + err.Error()
-		fmt.Printf(msg)
-		return
-	} else {
-		fmt.Printf("Pinged DB successfully: " + os.Getenv("DATABASE_URL"))
-	}
 
-	createTables()
+	initiateDatabase()
 }
 
-func createTables(){
-	tableName := "account"
-	tableDefinition := tableName + ` (name varchar(25) UNIQUE NOT NULL,
-		balance NUMERIC(17,2))
-		`
-	if _, err := db.Exec("CREATE TABLE IF NOT EXISTS " + tableDefinition); err != nil {
-        fmt.Printf("Error creating database table %s: %s", tableName, err)
-        return
-    }else {
-    	fmt.Printf("Created database table %s", tableName)
-    }
-
-    insertStatement := `
-    INSERT INTO account(name, balance) values ('test', 0.00)`
-    _, err := db.Exec(insertStatement)
-    if err != nil {
-    	fmt.Printf("Error add account")
-    }
+func initiateDatabase(){
+	db.AutoMigrate(&Account{})
+	var count int
+	db.Model(&Account{}).Count(&count)
+	print("Count: ", count, "\n")
+	if count == 0 {
+		db.Create(&Account{Name: "test", Balance: 0.00})
+	}
 }
