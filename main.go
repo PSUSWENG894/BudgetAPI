@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
-	"github.com/BudgetAPI/db"
+	"github.com/PSUSWENG894/BudgetAPI/db"
 )
 
 
