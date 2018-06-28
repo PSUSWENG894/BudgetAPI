@@ -1,5 +1,3 @@
-go_import_path: github.com/PSUSWENG894/BudgetAPI
-
 matrix:
   include:
     - language: go
@@ -7,6 +5,7 @@ matrix:
         - "1.10.x"
       script:
         - go build
+      go_import_path: github.com/PSUSWENG894/BudgetAPI
 
 deploy:
   provider: heroku
