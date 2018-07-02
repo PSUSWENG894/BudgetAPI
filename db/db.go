@@ -5,15 +5,10 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/jinzhu/gorm"
 	"os"
+	"github.com/PSUSWENG894/BudgetAPI/model"
 )
 
 var db *gorm.DB
-
-type Account struct {
-	gorm.Model
-	Name string `json:"name"`
-	Balance float64 `json:"balance"`
-}
 
 func SetupDatabase(initiateWithData bool){
 	msg := ""
@@ -36,15 +31,15 @@ func SetupDatabase(initiateWithData bool){
 }
 
 func migrate() {
-	db.AutoMigrate(&Account{})
+	db.AutoMigrate(&model.Account{})
 }
 
 func initiateData() {
 	var count int
-	db.Model(&Account{}).Count(&count)
+	db.Model(&model.Account{}).Count(&count)
 	print("Count: ", count, "\n")
 	if count == 0 {
-		db.Create(&Account{Name: "test", Balance: 0.00})
+		db.Create(&model.Account{Name: "test", Balance: 0.00})
 	}
 }
 

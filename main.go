@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 	"github.com/PSUSWENG894/BudgetAPI/db"
+	"github.com/PSUSWENG894/BudgetAPI/model"
 )
 
 
@@ -39,7 +40,7 @@ func main() {
 }
 
 func createAccount(ctxt *gin.Context){
-	var account db.Account
+	var account model.Account
 	ctxt.BindJSON(&account)
 
 	database := db.GetDB()
@@ -52,10 +53,10 @@ func fetchAllAccounts(ctxt *gin.Context){
 	fmt.Printf(msg)
 
 	database := db.GetDB()
-	accounts := []db.Account{}
+	accounts := []model.Account{}
 	database.Find(&accounts)
 	var count int
-	database.Model(&db.Account{}).Count(&count)
+	database.Model(&model.Account{}).Count(&count)
 	
 	msg = ""
 	acctJson, _ := json.Marshal(accounts)
