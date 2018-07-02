@@ -3,18 +3,6 @@
 	"ignore": "test",
 	"package": [
 		{
-			"checksumSHA1": "ga0qpaoZDS23s2DBz896PpZvsB8=",
-			"path": "github.com/PSUSWENG894/BudgetAPI",
-			"revision": "b680d828fe71d0c83ebe8b6748a19a7e360b7398",
-			"revisionTime": "2018-06-29T03:37:14Z"
-		},
-		{
-			"checksumSHA1": "qYuo+wuLLjBPAEYxzhHfSjmjnaI=",
-			"path": "github.com/PSUSWENG894/BudgetAPI/db",
-			"revision": "b680d828fe71d0c83ebe8b6748a19a7e360b7398",
-			"revisionTime": "2018-06-29T03:37:14Z"
-		},
-		{
 			"checksumSHA1": "QeKwBtN2df+j+4stw3bQJ6yO4EY=",
 			"path": "github.com/gin-contrib/sse",
 			"revision": "22d885f9ecc78bf4ee5d72b937e4bbcdc58e8cae",

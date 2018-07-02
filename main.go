@@ -39,22 +39,12 @@ func main() {
 }
 
 func createAccount(ctxt *gin.Context){
-	msg := "Creating account"
-
 	var account db.Account
 	ctxt.BindJSON(&account)
 
 	database := db.GetDB()
 	database.Save(&account)
 
-	print("Got context: ")
-	print(ctxt)
-	print("\n")
-	print(ctxt.Params)
-	print("\n")
-
-	fmt.Printf(msg + "\n")
-	// ctxt.JSON(200, gin.H{"message": msg},)
 	ctxt.JSON(201, account)
 }
 func fetchAllAccounts(ctxt *gin.Context){
