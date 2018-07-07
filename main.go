@@ -3,21 +3,29 @@ package main
 import (
 	// "encoding/json"
 	"fmt"
+	"github.com/jinzhu/gorm"
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 	"github.com/PSUSWENG894/BudgetAPI/db"
 	"github.com/PSUSWENG894/BudgetAPI/account"
+	"github.com/PSUSWENG894/BudgetAPI/income"
 )
 
+var shouldInitiateDate bool
 
 func init() {
 	fmt.Printf("Running init")
 	db.SetupDatabase()
 }
 
-func main() {
+func initiateData(database *gorm.DB){
+	account.InitiateData(database)
+	income.InitiateData(database)
+}
 
-	msg := "Hello Forrest!"
+func main() {
+	shouldInitiateDate = true
+	msg := "Hello World!"
 	fmt.Printf(msg)
 
 	router := gin.Default()
@@ -26,10 +34,17 @@ func main() {
 	})
 
 	apiGroup := router.Group("/api")
-	account.RegisterAccountsRoutes(apiGroup.Group("account"))
-
 	database := db.GetDB()
+	
+	account.RegisterAccountsRoutes(apiGroup.Group("account"))
 	account.Migrate(database)
+
+	income.Migrate(database)
+
+	if shouldInitiateDate {
+		initiateData(database)
+	}
+
 	// routes := router.Group("/api/account")
 	// {
 	// 	routes.POST("/", createAccount)
@@ -38,8 +53,6 @@ func main() {
 	// 	routes.PUT("/:id", updateAccount)
 	// 	routes.DELETE("/:id", deleteAccount)
 	// }
-
-
 
 	router.Run()
 }

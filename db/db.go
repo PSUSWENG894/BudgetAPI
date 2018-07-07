@@ -5,12 +5,12 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/jinzhu/gorm"
 	"os"
-	"github.com/PSUSWENG894/BudgetAPI/model"
+	// "github.com/PSUSWENG894/BudgetAPI/account"
 )
 
 var db *gorm.DB
 
-func SetupDatabase(initiateWithData bool){
+func SetupDatabase(){
 	msg := ""
 	dbConnString := fmt.Sprintf("host=%s dbname=%s user=%s password=%s sslmode=disable", 
 		os.Getenv("DB_HOST"), os.Getenv("DB_NAME"), os.Getenv("DB_USER"), 
@@ -24,24 +24,24 @@ func SetupDatabase(initiateWithData bool){
 		return
 	}
 
-	migrate()
-	if initiateWithData {
-		initiateData()
-	}
+	// migrate(&account.Account{})
+	// if initiateWithData {
+	// 	initiateData()
+	// }
 }
 
-func migrate() {
-	db.AutoMigrate(&model.Account{})
+func migrate(values ...interface{}) {
+	db.AutoMigrate(values)
 }
 
-func initiateData() {
-	var count int
-	db.Model(&model.Account{}).Count(&count)
-	print("Count: ", count, "\n")
-	if count == 0 {
-		db.Create(&model.Account{Name: "test", Balance: 0.00})
-	}
-}
+// func initiateData() {
+// 	var count int
+// 	db.Model(&account.Account{}).Count(&count)
+// 	print("Count: ", count, "\n")
+// 	if count == 0 {
+// 		db.Create(account.GetInitialAccount())
+// 	}
+// }
 
 func GetDB() *gorm.DB {
 	return db
