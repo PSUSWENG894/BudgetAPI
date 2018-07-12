@@ -50,8 +50,8 @@ func fetchIncome(ctxt *gin.Context){
 	database.Find(&income, id)
 
 	msg = ""
-	acctJson, _ := json.Marshal(income)
-	msg += string(acctJson)
+	incomeJson, _ := json.Marshal(income)
+	msg += string(incomeJson)
 
 	fmt.Printf(msg)
 	ctxt.JSON(200, gin.H{"message": msg},)
@@ -59,6 +59,19 @@ func fetchIncome(ctxt *gin.Context){
 func updateIncome(ctxt *gin.Context){
 	id := ctxt.Params.ByName("id")
 	msg := "Updating income " + id
+
+	database := db.GetDB()
+
+	income := Income{}
+	database.Find(&income, id)
+	ctxt.BindJSON(&income)
+
+	database.Save(&income)
+
+	print("Bound income to context" + "\n")
+	incomeJson, _ := json.Marshal(income)
+	print(string(incomeJson) + "\n")	
+
 	fmt.Printf(msg)
 	ctxt.JSON(200, gin.H{"message": msg},)
 }
