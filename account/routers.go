@@ -44,6 +44,16 @@ func fetchAccount(ctxt *gin.Context){
 	id := ctxt.Params.ByName("id")
 	msg := "Fetching account " + id
 	fmt.Printf(msg)
+
+	database := db.GetDB()
+	account := Account{}
+	database.Find(&account, id)
+
+	msg = ""
+	acctJson, _ := json.Marshal(account)
+	msg += string(acctJson)
+
+	fmt.Printf(msg)
 	ctxt.JSON(200, gin.H{"message": msg},)
 }
 func updateAccount(ctxt *gin.Context){

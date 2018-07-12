@@ -44,6 +44,16 @@ func fetchIncome(ctxt *gin.Context){
 	id := ctxt.Params.ByName("id")
 	msg := "Fetching income " + id
 	fmt.Printf(msg)
+
+	database := db.GetDB()
+	income := Income{}
+	database.Find(&income, id)
+
+	msg = ""
+	acctJson, _ := json.Marshal(income)
+	msg += string(acctJson)
+
+	fmt.Printf(msg)
 	ctxt.JSON(200, gin.H{"message": msg},)
 }
 func updateIncome(ctxt *gin.Context){
