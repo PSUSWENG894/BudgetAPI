@@ -7,7 +7,7 @@ import (
 	"github.com/PSUSWENG894/BudgetAPI/db"
 )
 
-func RegisterAccountsRoutes(router *gin.RouterGroup) {
+func RegisterAccountRoutes(router *gin.RouterGroup) {
 	router.POST("/", createAccount)
 	router.GET("/", fetchAllAccounts)
 	router.GET("/:id", fetchAccount)

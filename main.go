@@ -9,9 +9,10 @@ import (
 	"github.com/PSUSWENG894/BudgetAPI/db"
 	"github.com/PSUSWENG894/BudgetAPI/account"
 	"github.com/PSUSWENG894/BudgetAPI/income"
+	"github.com/PSUSWENG894/BudgetAPI/expense"
 )
 
-var shouldInitiateDate bool
+var shouldInitiateData bool
 
 func init() {
 	fmt.Printf("Running init")
@@ -21,10 +22,11 @@ func init() {
 func initiateData(database *gorm.DB){
 	account.InitiateData(database)
 	income.InitiateData(database)
+	expense.InitiateData(database)
 }
 
 func main() {
-	shouldInitiateDate = true
+	shouldInitiateData = true
 	msg := "Hello World!"
 	fmt.Printf(msg)
 
@@ -36,12 +38,16 @@ func main() {
 	apiGroup := router.Group("/api")
 	database := db.GetDB()
 	
-	account.RegisterAccountsRoutes(apiGroup.Group("account"))
+	account.RegisterAccountRoutes(apiGroup.Group("account"))
 	account.Migrate(database)
 
+	income.RegisterIncomeRoutes(apiGroup.Group("income"))
 	income.Migrate(database)
 
-	if shouldInitiateDate {
+	expense.RegisterExpenseRoutes(apiGroup.Group("expense"))
+	expense.Migrate(database)
+
+	if shouldInitiateData {
 		initiateData(database)
 	}
 

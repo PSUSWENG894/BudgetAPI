@@ -11,7 +11,7 @@ type Account struct {
 }
 
 func GetInitialAccount() *Account {
-	acct := Account{Name: "test", Balance: 0.00}
+	acct := Account{Name: "TestAccount", Balance: 7.00}
 	return &acct
 }
 
