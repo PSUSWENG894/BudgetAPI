@@ -74,7 +74,15 @@ func updateIncome(ctxt *gin.Context){
 }
 func deleteIncome(ctxt *gin.Context){
 	id := ctxt.Params.ByName("id")
-	msg := "Deleting income " + id
+	msg := "Deleting income " + id + "\n"
 	fmt.Printf(msg)
+
+	database := db.GetDB()
+
+	income := Income{}
+	d := database.Delete(&income, id)
+	print(d)
+	msg = "Income of id " + string(id) + " deleted"
+
 	ctxt.JSON(200, gin.H{"message": msg},)
 }

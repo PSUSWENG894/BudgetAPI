@@ -74,7 +74,15 @@ func updateAccount(ctxt *gin.Context){
 }
 func deleteAccount(ctxt *gin.Context){
 	id := ctxt.Params.ByName("id")
-	msg := "Deleting account " + id
+	msg := "Deleting account " + id + "\n"
 	fmt.Printf(msg)
+
+	database := db.GetDB()
+
+	account := Account{}
+	d := database.Delete(&account, id)
+	print(d)
+	msg = "Account of id " + string(id) + " deleted"
+
 	ctxt.JSON(200, gin.H{"message": msg},)
 }
