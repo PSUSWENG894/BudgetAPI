@@ -50,8 +50,8 @@ func fetchExpense(ctxt *gin.Context){
 	database.Find(&expense, id)
 
 	msg = ""
-	acctJson, _ := json.Marshal(expense)
-	msg += string(acctJson)
+	expenseJson, _ := json.Marshal(expense)
+	msg += string(expenseJson)
 
 	fmt.Printf(msg)
 	ctxt.JSON(200, gin.H{"message": msg},)
@@ -59,7 +59,17 @@ func fetchExpense(ctxt *gin.Context){
 func updateExpense(ctxt *gin.Context){
 	id := ctxt.Params.ByName("id")
 	msg := "Updating expense " + id
-	fmt.Printf(msg)
+
+	database := db.GetDB()
+
+	expense := Expense{}
+	database.Find(&expense, id)
+	ctxt.BindJSON(&expense)
+	database.Save(&expense)
+
+	expenseJson, _ := json.Marshal(expense)
+	msg += string(expenseJson)
+
 	ctxt.JSON(200, gin.H{"message": msg},)
 }
 func deleteExpense(ctxt *gin.Context){

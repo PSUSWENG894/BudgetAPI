@@ -65,14 +65,11 @@ func updateIncome(ctxt *gin.Context){
 	income := Income{}
 	database.Find(&income, id)
 	ctxt.BindJSON(&income)
-
 	database.Save(&income)
 
-	print("Bound income to context" + "\n")
 	incomeJson, _ := json.Marshal(income)
-	print(string(incomeJson) + "\n")	
+	msg += string(incomeJson)
 
-	fmt.Printf(msg)
 	ctxt.JSON(200, gin.H{"message": msg},)
 }
 func deleteIncome(ctxt *gin.Context){
