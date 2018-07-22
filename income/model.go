@@ -22,7 +22,7 @@ func Migrate(db *gorm.DB) {
 func InitiateData(db *gorm.DB) {
 	var count int
 	db.Model(&Income{}).Count(&count)
-	print("Count: ", count, "\n")
+	print("Income Count: ", count, "\n")
 	if count == 0 {
 		db.Create(GetInitialIncome())
 	}

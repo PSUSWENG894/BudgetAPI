@@ -16,14 +16,18 @@ func GetInitialExpense() *Expense {
 }
 
 func Migrate(db *gorm.DB) {
-	print("Migrating expense")
 	db.AutoMigrate(&Expense{})
+}
+
+func RecreateTable(db *gorm.DB) {
+	db.DropTable(&Expense{})
+	Migrate(db)
 }
 
 func InitiateData(db *gorm.DB) {
 	var count int
 	db.Model(&Expense{}).Count(&count)
-	print("Count: ", count, "\n")
+	print("Expense Count: ", count, "\n")
 	if count == 0 {
 		db.Create(GetInitialExpense())
 	}
