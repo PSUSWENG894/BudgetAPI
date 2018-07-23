@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/PSUSWENG894/BudgetAPI/db"
+	"github.com/PSUSWENG894/BudgetAPI/budget"
 )
 
 func RegisterAccountRoutes(router *gin.RouterGroup) {
@@ -57,20 +58,30 @@ func fetchAccount(ctxt *gin.Context){
 	ctxt.JSON(200, gin.H{"message": msg},)
 }
 func updateAccount(ctxt *gin.Context){
+	isValid := true
+	msg := ""
+
 	id := ctxt.Params.ByName("id")
-	msg := "Updating account " + id
-
 	database := db.GetDB()
-
 	account := Account{}
 	database.Find(&account, id)
 	ctxt.BindJSON(&account)
-	database.Save(&account)
 
-	acctJson, _ := json.Marshal(account)
-	msg += string(acctJson)
+	budget := budget.Budget{}
+	database.Find(&budget, account.BudgetID)
+	if budget.ID < 1 {
+		isValid = false
+	}
 
-	ctxt.JSON(200, gin.H{"message": msg},)
+	if isValid {
+		database.Save(&account)
+		acctJson, _ := json.Marshal(account)
+		msg += string(acctJson)
+		ctxt.JSON(200, gin.H{"data": msg},)
+	} else {
+		msg = "Invalid data"
+		ctxt.JSON(400, gin.H{"error": msg},)
+	}
 }
 func deleteAccount(ctxt *gin.Context){
 	id := ctxt.Params.ByName("id")
