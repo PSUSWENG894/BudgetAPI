@@ -42,11 +42,20 @@ func CreateTestData(database *gorm.DB) {
 		database.Save(&account1)	
 	}
 
+	income1 := income.Income{}
 	database.Model(&income.Income{}).Count(&count)
 	if count == 0 {
-		income1 := income.GetInitialIncome()
+		income1 = *income.GetInitialIncome()
 		database.Create(&income1)
+	} else{
+		database.First(&income1)
 	}
+
+	database.Model(&income.IncomePayment{}).Count(&count)
+	if count == 0 {
+		incpay := income.GetInitialIncomePayment(income1.ID)
+		database.Create(&incpay)
+	}	
 
 	database.Model(&expense.Expense{}).Count(&count)
 	if count == 0 {

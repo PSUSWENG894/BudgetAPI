@@ -20,8 +20,6 @@ func GetInitialAccount() *Account {
 }
 
 func Migrate(db *gorm.DB) {
-	print("Creating table")
-	print(&Account{})
 	db.AutoMigrate(&Account{})
 }
 
