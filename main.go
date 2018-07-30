@@ -7,6 +7,7 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
+	"github.com/PSUSWENG894/BudgetAPI/core"
 	"github.com/PSUSWENG894/BudgetAPI/db"
 	"github.com/PSUSWENG894/BudgetAPI/budget"
 	"github.com/PSUSWENG894/BudgetAPI/account"
@@ -78,9 +79,10 @@ func main() {
 	fmt.Printf(msg)
 
 	router := gin.Default()
-	router.GET("/", func(ctxt *gin.Context){
-		ctxt.JSON(200, gin.H{"message": msg},)
-	})
+	router.LoadHTMLGlob("templates/*.html")
+	// router.GET("/", func(ctxt *gin.Context){
+	// 	ctxt.JSON(200, gin.H{"message": msg},)
+	// })
 
 	apiGroup := router.Group("/api")
 	database := db.GetDB()
@@ -96,6 +98,17 @@ func main() {
 
 	expense.RegisterExpenseRoutes(apiGroup.Group("expense"))
 	expense.Migrate(database)
+
+	apiRouteDict := gin.H{
+		"budget": "/api/budget",
+		"account": "/api/account",
+		"income": "/api/income",
+		"expense": "/api/expense",
+	}
+	homeArgs := core.HomeArgs{Title: "Test Steve Title", ApiRouteDict: apiRouteDict }
+	
+	core.HomeArgContext = homeArgs
+	core.RegisterCoreRoutes(apiGroup)
 
 	if shouldInitiateData {
 		CreateTestData(database)

@@ -1,0 +1,13 @@
+<!doctype html>
+{{$title := .args.Title}}
+<html>
+	<head>
+		<title>{{.}}</title>
+	</head>
+	<body>
+		<h1>{{.args.Title}}</h1>
+		{{range .endpointList}}
+			<div>{{.}}</div>
+		{{end}}
+	</body>
+</html>
