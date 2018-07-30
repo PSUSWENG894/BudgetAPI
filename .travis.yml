@@ -10,7 +10,6 @@ matrix:
 deploy:
   provider: heroku
   api_key: $HEROKU_API_KEY
-  app:
-    sf-budget-api
+  app: sf-budget-api
   on:
     branch: master
