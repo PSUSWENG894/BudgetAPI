@@ -1,0 +1,41 @@
+info:
+  contact:
+    email: admin@swcraftsman.com
+    name: Personal Finance Support
+    url: http://www.swcraftsman.com
+  description: This is the backend API for the Personal Finance App
+  license: {}
+  title: Personal Finance App
+  version: "0.10"
+paths:
+  /api/account:
+    get:
+      description: Get all accounts
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            items:
+              $ref: '#/definitions/Account'
+            type: array
+      summary: List Accounts
+      tags:
+      - accounts account
+    post:
+      consumes:
+      - application/json
+      description: Create an account
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/Account'
+            type: object
+      summary: Add Account
+      tags:
+      - accounts account
+swagger: "2.0"

@@ -1,0 +1,61 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is the backend API for the Personal Finance App",
+        "title": "Personal Finance App",
+        "contact": {
+            "name": "Personal Finance Support",
+            "url": "http://www.swcraftsman.com",
+            "email": "admin@swcraftsman.com"
+        },
+        "license": {},
+        "version": "0.10"
+    },
+    "paths": {
+        "/api/account": {
+            "get": {
+                "description": "Get all accounts",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "accounts account"
+                ],
+                "summary": "List Accounts",
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Account"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create an account",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "accounts account"
+                ],
+                "summary": "Add Account",
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/Account"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

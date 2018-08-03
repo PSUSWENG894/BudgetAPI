@@ -16,6 +16,14 @@ func RegisterAccountRoutes(router *gin.RouterGroup) {
 	router.DELETE("/:id", deleteAccount)
 }
 
+// Accounts
+// @Summary Add Account
+// @Description Create an account
+// @Tags accounts account
+// @Accept json
+// @Produce json
+// @Success 201 {object} Account
+// @Router /api/account [post]
 func createAccount(ctxt *gin.Context){
 	var account Account
 	ctxt.BindJSON(&account)
@@ -25,6 +33,14 @@ func createAccount(ctxt *gin.Context){
 
 	ctxt.JSON(201, account)
 }
+
+// Accounts
+// @Summary List Accounts
+// @Description Get all accounts
+// @Tags accounts account
+// @Produce json
+// @Success 201 {array} Account
+// @Router /api/account [get]
 func fetchAllAccounts(ctxt *gin.Context){
 	msg := "Fetching all accounts"
 	fmt.Printf(msg)

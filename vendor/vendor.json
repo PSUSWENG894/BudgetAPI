@@ -88,6 +88,24 @@
 			"revisionTime": "2018-05-11T05:30:14Z"
 		},
 		{
+			"checksumSHA1": "Q+HNFtAA/9KrnATHb3N4vG2BJSo=",
+			"path": "github.com/swaggo/gin-swagger",
+			"revision": "8cf3fa9932e247205d1cf2be6fd13a9d09ceb9a4",
+			"revisionTime": "2018-04-13T18:04:08Z"
+		},
+		{
+			"checksumSHA1": "A1gNAXglJwicLgCC7OIE7+a6KyQ=",
+			"path": "github.com/swaggo/gin-swagger/swaggerFiles",
+			"revision": "8cf3fa9932e247205d1cf2be6fd13a9d09ceb9a4",
+			"revisionTime": "2018-04-13T18:04:08Z"
+		},
+		{
+			"checksumSHA1": "dJ3MhMd5z6WfAaWGcwjC0/6eVss=",
+			"path": "github.com/swaggo/swag/cmd/swag",
+			"revision": "de064fbbef9c48d97ce02fade618d58ce270b48d",
+			"revisionTime": "2018-08-01T13:57:26Z"
+		},
+		{
 			"checksumSHA1": "kdas0zQNtQqfUMEMFGkUF1OcgPc=",
 			"path": "github.com/ugorji/go/codec",
 			"revision": "f3cacc17c85ecb7f1b6a9e373ee85d1480919868",
