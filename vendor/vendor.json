@@ -292,9 +292,5 @@
 			"revisionTime": "2018-03-28T19:50:20Z"
 		}
 	],
-	"rootPath": "github.com/PSUSWENG894/BudgetAPI",
-	"heroku": {
-		"install" : ["./..."],
-		"goVersion": "go1.10"
-	}
+	"rootPath": "github.com/PSUSWENG894/BudgetAPI"
 }
