@@ -6,8 +6,10 @@
 	</head>
 	<body>
 		<h1>{{.args.Title}}</h1>
-		{{range .endpointList}}
-			<div>{{.}}</div>
+		{{range $key, $value := .args.ApiRouteDict}}
+		<div>
+			<a href="{{$value}}">{{$key}}</a>
+		</div>
 		{{end}}
 	</body>
 </html>

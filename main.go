@@ -108,7 +108,7 @@ func main() {
 	homeArgs := core.HomeArgs{Title: "Test Steve Title", ApiRouteDict: apiRouteDict }
 	
 	core.HomeArgContext = homeArgs
-	core.RegisterCoreRoutes(apiGroup)
+	core.RegisterCoreRoutes(apiGroup, router)
 
 	if shouldInitiateData {
 		CreateTestData(database)

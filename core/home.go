@@ -14,7 +14,8 @@ type HomeArgs struct {
 var HomeArgContext HomeArgs
 
 
-func RegisterCoreRoutes(router *gin.RouterGroup) {
+func RegisterCoreRoutes(router *gin.RouterGroup, engine *gin.Engine) {
+	engine.GET("/", getHome)
 	router.GET("/", getHome)
 }
 
