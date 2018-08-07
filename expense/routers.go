@@ -28,34 +28,36 @@ func fetchAllExpenses(ctxt *gin.Context){
 	msg := "Fetching all expenses"
 	fmt.Printf(msg)
 
-	database := db.GetDB()
-	expenses := []Expense{}
-	database.Find(&expenses)
-	var count int
-	database.Model(&Expense{}).Count(&count)
-	
-	msg = ""
-	expnsJson, _ := json.Marshal(expenses)
-	msg += string(expnsJson)
+	expenses := GetExpensesFromDB()
+	msg = GetExpenseListAsJson(&expenses)
 
 	ctxt.JSON(200, gin.H{"message": msg},)
 }
+func GetExpensesFromDB() []Expense {
+	database := db.GetDB()
+	expenses := []Expense{}
+	database.Find(&expenses)
+	return expenses
+}
+
 func fetchExpense(ctxt *gin.Context){
 	id := ctxt.Params.ByName("id")
 	msg := "Fetching expense " + id
 	fmt.Printf(msg)
 
-	database := db.GetDB()
-	expense := Expense{}
-	database.Find(&expense, id)
-
-	msg = ""
-	expenseJson, _ := json.Marshal(expense)
-	msg += string(expenseJson)
+	expense := getExpenseFromDB(id)
+	msg = GetExpenseAsJson(&expense)
 
 	fmt.Printf(msg)
 	ctxt.JSON(200, gin.H{"message": msg},)
 }
+func getExpenseFromDB(id string) Expense {
+	database := db.GetDB()
+	expense := Expense{}
+	database.Find(&expense, id)
+	return expense
+}
+
 func updateExpense(ctxt *gin.Context){
 	id := ctxt.Params.ByName("id")
 	msg := "Updating expense " + id
@@ -67,8 +69,7 @@ func updateExpense(ctxt *gin.Context){
 	ctxt.BindJSON(&expense)
 	database.Save(&expense)
 
-	expenseJson, _ := json.Marshal(expense)
-	msg += string(expenseJson)
+	msg = GetExpenseAsJson(&expense)
 
 	ctxt.JSON(200, gin.H{"message": msg},)
 }
@@ -80,9 +81,21 @@ func deleteExpense(ctxt *gin.Context){
 	database := db.GetDB()
 
 	expense := Expense{}
-	d := database.Delete(&expense, id)
-	print(d)
+	database.Delete(&expense, id)
 	msg = "Expense of id " + string(id) + " deleted"
 
 	ctxt.JSON(200, gin.H{"message": msg},)
+}
+
+func GetExpenseAsJson(expense *Expense) string{
+	msg := ""
+	expnsJson, _ := json.Marshal(expense)
+	msg += string(expnsJson)
+	return msg
+}
+func GetExpenseListAsJson(expenseList *[]Expense) string{
+	msg := ""
+	expnsJson, _ := json.Marshal(expenseList)
+	msg += string(expnsJson)
+	return msg
 }
