@@ -6,7 +6,7 @@
 	</head>
 	<body>
 		<h1>{{.args.Title}}</h1>
-		<div><a href="swagger/index.html">Swagger: Personal Finance App API documentation</a></div>
+		<div><a href="/swagger/index.html">Swagger: Personal Finance App API documentation</a></div>
 		{{range $key, $value := .args.ApiRouteDict}}
 		<div>
 			<a href="{{$value}}">{{$key}}</a>

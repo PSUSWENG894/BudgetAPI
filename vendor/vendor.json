@@ -256,6 +256,12 @@
 			"revisionTime": "2018-08-02T14:11:26Z"
 		},
 		{
+			"checksumSHA1": "i05c1J3Pkn6Ll+YINNnf6nv8z0g=",
+			"path": "golang.org/x/tools/cmd/cover",
+			"revision": "3c07937fe18c27668fd78bbaed3d6b8b39e202ea",
+			"revisionTime": "2018-07-25T23:22:41Z"
+		},
+		{
 			"checksumSHA1": "4Im9wKzWtIB9dgTZv34B9YIpzak=",
 			"path": "golang.org/x/tools/go/ast/astutil",
 			"revision": "3c07937fe18c27668fd78bbaed3d6b8b39e202ea",

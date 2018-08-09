@@ -117,7 +117,7 @@ func main() {
 		"income": "/api/income",
 		"expense": "/api/expense",
 	}
-	homeArgs := core.HomeArgs{Title: "Budget", ApiRouteDict: apiRouteDict }
+	homeArgs := core.HomeArgs{Title: "Finance App API", ApiRouteDict: apiRouteDict }
 	
 	core.HomeArgContext = homeArgs
 	core.RegisterCoreRoutes(apiGroup, router)
